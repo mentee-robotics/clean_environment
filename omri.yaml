@@ -1,0 +1,188 @@
+main:
+#  test_init:
+#    shoulder_pitch: 100.0
+#    shoulder_roll: 100.0
+#    shoulder_yaw: 100.0
+#    elbow: 100.0
+#  wrist_motor:
+  cycle_duration: 0.9
+  actions_offset: false
+  delta_actions_limit: {}
+  emma: false
+  lpf: false
+  lpf_coeffs: false
+  lpf_cutoff: 5
+  assymetric_scaling: false
+  assymetric_scaling_type: 1
+#  max_kp:
+#    shoulder_pitch: 100.0
+#    shoulder_roll: 100.0
+#    shoulder_yaw: 100.0
+#    elbow: 100.0
+#    wrist: 100.0
+#  max_kd:
+#    shoulder_pitch: 50.0
+#    shoulder_roll: 50.0
+#    shoulder_yaw: 50.0
+#    elbow: 50.0
+#    wrist: 50.0
+#  min_kp:
+#    shoulder_pitch: 5.0
+#    shoulder_roll: 5.0
+#    shoulder_yaw: 5.0
+#    elbow: 5.0
+#    wrist: 5.0
+#  min_kd:
+#    shoulder_pitch: 0.5
+#    shoulder_roll: 0.5
+#    shoulder_yaw: 0.5
+#    elbow: 0.5
+#    wrist: 0.5
+#  default_kp:
+#    shoulder_pitch: 50.0
+#    shoulder_roll: 50.0
+#    shoulder_yaw: 50.0
+#    elbow: 50.0
+#    wrist: 50.0
+#  default_kd:
+#    shoulder_pitch: 5.0
+#    shoulder_roll: 5.0
+#    shoulder_yaw: 5.0
+#    elbow: 5.0
+#    wrist: 5.0
+  policy_update_step: 1
+  amp_flag: false
+  cls: PolicyTS
+  name: standing
+  visible_dofs:
+  - right_shoulder_pitch
+  - right_shoulder_roll
+  - right_shoulder_yaw
+  - right_elbow
+#  - right_wrist_pitch
+#  - right_wrist_yaw
+  - right_wrist_roll
+  learned_pd: false
+  aux_torque_output: false
+  actions_activation: null
+  pod_dof_dict:
+    right_shoulder_pitch: 0
+    right_shoulder_roll: 1
+    right_shoulder_yaw: 2
+    right_elbow: 3
+    right_wrist_pitch: 4
+    right_wrist_yaw: 5
+    right_wrist_roll: 6
+  dof_pos_limits:
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  - - -1.5700000524520874
+    - 1.5700000524520874
+  soft_limit_factor: 1.0
+  default_dof_pos:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  model_path: /home/omri/models/experiment_128/e2e.ts
+  torque_limits:
+  - 25.0
+  - 25.0
+  - 18.0
+  - 18.0
+  - 3.5
+  - 3.5
+  - 3.5
+  pd_gains:
+    right_shoulder_pitch:
+      kp: 50.0
+      kd: 5.0
+    right_shoulder_roll:
+      kp: 50.0
+      kd: 5.0
+    right_shoulder_yaw:
+      kp: 50.0
+      kd: 5.0
+    right_elbow:
+      kp: 50.0
+      kd: 5.0
+    right_wrist_pitch:
+      kp: 50.0
+      kd: 5.0
+    right_wrist_yaw:
+      kp: 50.0
+      kd: 5.0
+    right_wrist_roll:
+      kp: 50.0
+      kd: 5.0
+  observations:
+#    command:
+#      default_value:
+#      - 0.0
+#      - 0.0
+#      - 0
+#      function: get_commands
+#      obs_scale: 1.0
+#      noise_scale_mul:
+#      - 1.0
+#      - 1.0
+#      noise_scale_add:
+#      - 0.0
+#      - 0.0
+#      size: 3
+#      params:
+#        end: 3
+#    sin_net_time:
+#      default_value:
+#      - 0.0
+#      function: sin_net_time
+#      obs_scale: 1.0
+#      noise_scale_mul:
+#      - 1.0
+#      - 1.0
+#      noise_scale_add:
+#      - 0.0
+#      - 0.0
+#      size: 1
+#  command_dict:
+#    default_value:
+#      sin_amp: 0.0
+#      sin_omega: 0.0
+#      dof_selector: 0
+#    ranges:
+#      sin_amp:
+#      - 0.0
+#      - 1.0
+#      sin_omega:
+#      - 0.0
+#      - 10.0
+#      dof_selector:
+#      - 0
+#      - 11
+#    increment:
+#      sin_amp: 0.01
+#      sin_omega: 0.1
+#      dof_selector: 1
+#    key_map:
+#      sin_amp:
+#      - w
+#      - s
+#      sin_omega:
+#      - a
+#      - d
+#      dof_selector:
+#      - u
+#      - j
