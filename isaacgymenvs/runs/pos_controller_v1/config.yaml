@@ -104,7 +104,7 @@ train:
       score_to_win: 10000
       max_epochs: ${resolve_default:10000,${....max_iterations}}
       save_best_after: 10
-      save_frequency: 10
+      save_frequency: 200
       print_stats: true
       grad_norm: 1.0
       entropy_coef: 0.0
@@ -132,7 +132,7 @@ num_threads: 4
 solver_type: 1
 num_subscenes: 4
 test: true
-checkpoint: /home/guy/VSprojects/clean_environment/isaacgymenvs/runs/pos_controller_v1/nn/pos_controller_v1.pth
+checkpoint: /home/guy/VSprojects/clean_environment/isaacgymenvs/runs/pos_controller_v2/nn/pos_controller_v2.pth
 multi_gpu: false
 wandb_activate: false
 wandb_group: ''
