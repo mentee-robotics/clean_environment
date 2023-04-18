@@ -132,7 +132,7 @@ num_threads: 4
 solver_type: 1
 num_subscenes: 4
 test: true
-checkpoint: /home/guy/VSprojects/clean_environment/isaacgymenvs/runs/pos_controller_v2/nn/pos_controller_v2.pth
+checkpoint: /home/guy/VSprojects/clean_environment/isaacgymenvs/runs/pos_controller_v1/nn/pos_controller_v1.pth
 multi_gpu: false
 wandb_activate: false
 wandb_group: ''

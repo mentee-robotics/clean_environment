@@ -989,7 +989,7 @@ def compute_franka_reward(
     open_hand = torch.norm(states['q'][:, -4:], dim = -1)
 
     distance_to_final_target = torch.exp(-10 * torch.norm(states['cubeA_pos'] - states['pick_target'], dim = -1))
-    rewards = 2*poss_quat_reward + 0.5 * dist_reward #+ 5 * cubeA_lifted + close_to_goal * close_hand + cubeA_lifted * distance_to_final_target * 5  #+ close_to_goal * #+ open_hands#+ 1 * contact_reward + 5 * contact_reward * dist_from_target #- obstacle_fell.long()  #- 5 * bad_coordinate#+ from_side #+ #+ torque_reward + action_diff #+ action_diff #no_rotation
+    rewards = 2*poss_quat_reward + 1 * dist_reward #+ 5 * cubeA_lifted + close_to_goal * close_hand + cubeA_lifted * distance_to_final_target * 5  #+ close_to_goal * #+ open_hands#+ 1 * contact_reward + 5 * contact_reward * dist_from_target #- obstacle_fell.long()  #- 5 * bad_coordinate#+ from_side #+ #+ torque_reward + action_diff #+ action_diff #no_rotation
 
     reset_buf = torch.where((progress_buf >= max_episode_length - 1), torch.ones_like(reset_buf), reset_buf)
     cube_fall = states['cubeA_pos'][:, 2] < 1
