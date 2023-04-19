@@ -1,0 +1,20 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "cwd": "${fileDirname}",
+            //"args": ["task=FrankaCubeStack","headless=False", "experiment=both_hands_v1", "num_envs=4096", "test=False", "seed=99"], //, "test=True", "checkpoint=runs/with_depth/nn/with_depth.pth" // ["task=FrankaCubeStack", "test=True","headless=True", "checkpoint=runs/ok_policy.pth", "num_envs=32"]
+            "args": ["task=FrankaCubeStack","headless=False", "experiment=both_hands_v1", "num_envs=8", "test=True", "seed=99", "checkpoint=runs/both_hands_v1/nn/both_hands_v1.pth"]
+        }
+    ]
+}
