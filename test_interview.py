@@ -1,58 +1,32 @@
 import torch as th
 
-import torch
-
-import torch
-import numpy as np
-
 class BatchQueue:
-    def __init__(self, L, B, F):
-        self.L = L
-        self.B = B
-        self.F = F
-        self.tensor = torch.zeros((B, L, F))
-        self.heads = np.zeros(B)
-        self.tails = np.zeros(B)
-        self.indices = np.indices(self.tensor.shape)
+    def __init__(self,dims):
+        self.batch_queue = th.zeros(dims[1],dims[0],dims[2])
+        self.batch_head = th.zeros(dims[1],dtype=int) - 1
 
     def dequeue(self, batch_indices):
-        retval = self.tensor[batch_indices, self.heads[batch_indices], :]
-        self.heads[batch_indices] = self.heads[batch_indices] + 1 % self.L
-        return retval
+        removed_instance=self.batch_queue[batch_indices,self.batch_head[batch_indices]]
+        self.batch_queue[batch_indices,self.batch_head[batch_indices]] *= th.tensor(0)
+        self.batch_head[batch_indices] -= 1
+        return removed_instance
 
     def enqueue(self, values, batch_indices):
-        T, N, F = values.shape
-        tails_on_indices = self.tails[batch_indices] + T
-        tails_on_indices_cropped = np.clip(tails_on_indices, 0, self.L)
-        items_to_add_per_index_at_end = tails_on_indices_cropped - self.tails[batch_indices]
+        N,T,F = th.tensor(values.shape[1]),th.tensor(values.shape[0]),th.tensor(values.shape[2])
+        self.batch_queue[batch_indices] = th.roll(self.batch_queue[batch_indices],int(T),1)
+        self.batch_head[batch_indices] += T
+        values = th.swapaxes(values,1,0)
+        self.batch_queue[batch_indices,0:T] = values
 
-        mask_to_add_at_end = self.indices[0][batch_indices, :, :] >= np.repeat(np.repeat(self.tails[batch_indices, np.newaxis, np.newaxis], T, axis=1), F, axis=2) &\
-                             self.indices[0][batch_indices, :, :] <= np.repeat(np.repeat(tails_on_indices_cropped[:, np.newaxis, np.newaxis], T, axis=1), F, axis=2)
-        mask_values_to_add_at_end = np.indices(values.shape)[0] <\
-                                    np.repeat(np.repeat(items_to_add_per_index_at_end[np.newaxis, :, np.newaxis], T, axis=0), F, axis=2)
-        self.tensor[:, batch_indices, :][mask_to_add_at_end] = values[mask_values_to_add_at_end]
 
-        mask_to_add_at_beginning = self.indices[0][:, batch_indices, :] < items_to_add_per_index_at_end[np.newaxis, :, np.newaxis]
-        self.tensor[:, batch_indices, :][mask_to_add_at_beginning] = np.logical_not(mask_values_to_add_at_end)
-
-    def peek(self,location, batch_indices):
-        heads_mask = location == 'head'
-        heads_at_indices = self.tensor[:, batch_indices, :][self.heads[batch_indices]]
-        tails_at_indices = self.tensor[:, batch_indices, :][self.tails[batch_indices]]
-
+    def peek(self, location, batch_indices):
+        result = [0 if x == "Tail" else self.batch_head[batch_indices[i]] for i,x in enumerate(location)]
+        output = self.batch_queue[batch_indices,result]
+        return output
 
 
 # dims = th.Tensor([5, 4, 3])
-test_queue = BatchQueue(*[5, 4, 3])
-test_queue.enqueue(3 * torch.ones((1, 1, 3)), [0])
-test_queue.enqueue(3 * torch.ones((1, 1, 3)), [1])
-test_queue.enqueue(3 * torch.ones((1, 1, 3)), [2])
-test_queue.enqueue(3 * torch.ones((1, 1, 3)), [3])
-test_queue.enqueue(1 * torch.ones((2, 1, 3)), [0])
-
-print('w')
-
-x = test_queue.dequeue([0])
+test_queue = BatchQueue([5, 4, 3])
 print('w')
 
 print(f"before enqueue the tails are {test_queue.tails}")
