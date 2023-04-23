@@ -598,7 +598,7 @@ class FrankaCubeStack(VecTask):
         # print("HERE")
         # print(self.states['first_cube_pos_normalized'][:, :])
         # print(torch.norm(self.states['eef_pos_normalized'] - self.states['eef_pos_normalized_torch'], dim = -1).max())
-        obs +=  ["q_short", "target", "eef_pos"]
+        obs +=  ["q_short", "target_normalized", "cubeB_quat", "eef_pos_normalized"]
         # print(self.states['first_cube_pos_normalized'])
         self.obs_buf = torch.cat([self.states[ob] for ob in obs], dim=-1)
         # print(self.obs_buf)
@@ -606,14 +606,14 @@ class FrankaCubeStack(VecTask):
 
         # print(self.progress_buf)
         # print(self.states['cubeA_pos'][:, 2])
-        progress = self.progress_buf == 70
-        successful = self.states['cubeA_pos'][:, 2] > 1.10
-        successful = torch.logical_and(successful, progress)
-        with open('starting_points_290.txt', 'a+') as f:
-            to_write = torch.cat((self.states['q'][successful], self.states['cubeA_pos'][successful],
-                                  self.states['cubeA_quat'][successful]), dim=1).tolist()
-            for row in to_write:
-                f.write(str(row) + '\n')
+        # progress = self.progress_buf == 70
+        # successful = self.states['cubeA_pos'][:, 2] > 1.10
+        # successful = torch.logical_and(successful, progress)
+        # with open('starting_points_290.txt', 'a+') as f:
+        #     to_write = torch.cat((self.states['q'][successful], self.states['cubeA_pos'][successful],
+        #                           self.states['cubeA_quat'][successful]), dim=1).tolist()
+        #     for row in to_write:
+        #         f.write(str(row) + '\n')
         return self.obs_buf
 
     def reset_idx(self, env_ids):
@@ -1027,4 +1027,3 @@ def compute_franka_reward(
 
     return rewards, reset_buf
 
-#
